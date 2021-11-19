@@ -24,8 +24,9 @@ namespace MxcEventsBackEnd.Contollers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Object>>> GetMEvents()
         {
-            var response = await _context.MEvents.Select(p => new { p.Name, p.Location, p.Capacity, p.Id, p.CreationDate })
+            var response = await _context.MEvents.Select(item => new { item.Name, item.Location, item.Capacity, item.Id, item.CreationDate}) //Hide Country Column
                                                  .OrderBy(item => item.Name)
+                                                 .ThenBy(item => item.CreationDate)
                                                  .ToListAsync();
 
             return response;

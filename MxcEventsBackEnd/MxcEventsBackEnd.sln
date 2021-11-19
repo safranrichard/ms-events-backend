@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MxcEventsBackEnd", "MxcEventsBackEnd\MxcEventsBackEnd.csproj", "{406909C7-5ECB-4CC9-B56F-8BEF0B084FAF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{406909C7-5ECB-4CC9-B56F-8BEF0B084FAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{406909C7-5ECB-4CC9-B56F-8BEF0B084FAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{406909C7-5ECB-4CC9-B56F-8BEF0B084FAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{406909C7-5ECB-4CC9-B56F-8BEF0B084FAF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1C460B57-02CC-4197-AC76-AC356E451DF2}
+	EndGlobalSection
+EndGlobal

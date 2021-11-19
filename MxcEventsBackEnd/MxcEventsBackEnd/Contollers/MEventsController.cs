@@ -27,6 +27,22 @@ namespace MxcEventsBackEnd.Contollers
             return await _context.MEvents.ToListAsync();
         }
 
+        // POST: api/MEvents
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<MEvent>> PostMEvent(MEvent mEvent)
+        {
+            mEvent.SetId();
+            mEvent.SetCreationDate();
+
+            _context.MEvents.Add(mEvent);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetMEvent", new { id = mEvent.Id }, mEvent);
+        }
+
+
+        /*
         // GET: api/MEvents/5
         [HttpGet("{id}")]
         public async Task<ActionResult<MEvent>> GetMEvent(Guid id)
@@ -102,6 +118,6 @@ namespace MxcEventsBackEnd.Contollers
         private bool MEventExists(Guid id)
         {
             return _context.MEvents.Any(e => e.Id == id);
-        }
+        }*/
     }
 }

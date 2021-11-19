@@ -22,9 +22,13 @@ namespace MxcEventsBackEnd.Contollers
 
         // GET: api/MEvent
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MEvent>>> GetMEvents()
+        public async Task<ActionResult<IEnumerable<Object>>> GetMEvents()
         {
-            return await _context.MEvents.ToListAsync();
+            var response = await _context.MEvents.Select(p => new { p.Name, p.Location, p.Capacity, p.Id, p.CreationDate })
+                                                 .OrderBy(item => item.Name)
+                                                 .ToListAsync();
+
+            return response;
         }
 
         // POST: api/MEvent

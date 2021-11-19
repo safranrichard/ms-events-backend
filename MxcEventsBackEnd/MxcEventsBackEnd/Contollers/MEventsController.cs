@@ -20,14 +20,14 @@ namespace MxcEventsBackEnd.Contollers
             _context = context;
         }
 
-        // GET: api/MEvents
+        // GET: api/MEvent
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MEvent>>> GetMEvents()
         {
             return await _context.MEvents.ToListAsync();
         }
 
-        // POST: api/MEvents
+        // POST: api/MEvent
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<MEvent>> PostMEvent(MEvent mEvent)
@@ -38,9 +38,12 @@ namespace MxcEventsBackEnd.Contollers
             _context.MEvents.Add(mEvent);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMEvent", new { id = mEvent.Id }, mEvent);
+            return CreatedAtAction("GetMEvents", new { id = mEvent.Id }, mEvent);
         }
 
+        /*
+         
+         */
 
         /*
         // GET: api/MEvents/5

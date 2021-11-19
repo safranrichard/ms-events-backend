@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using MxcEventsBackEnd.Models;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,13 @@ namespace MxcEventsBackEnd
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
             );
 
+            //Swashbuckle
+            services.AddControllers();
+
+            services.AddSwaggerGen(options =>
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Conference Planner API", Version = "v1" })
+            );
+
             services.AddRazorPages();
         }
 
@@ -49,12 +57,25 @@ namespace MxcEventsBackEnd
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            //Swashbuckle
+            app.UseSwagger();
+
+            app.UseSwaggerUI(options =>
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Conference Planner API v1")
+            );
+
             app.UseRouting();
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGet("/", context => {
+                    context.Response.Redirect("/swagger/");
+                    return Task.CompletedTask;
+                });
+                endpoints.MapControllers();
+
                 endpoints.MapRazorPages();
             });
         }

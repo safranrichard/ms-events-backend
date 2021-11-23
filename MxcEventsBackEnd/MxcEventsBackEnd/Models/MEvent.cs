@@ -6,33 +6,22 @@ using System.Threading.Tasks;
 
 namespace MxcEventsBackEnd.Models
 {
-    public class MEvent
+    public class MEvent : MEventBase
     {
-        [Required]
-        public string Name { get; set; }
+        public DateTime CreationDate { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "Name length can't be more than 100.")]
-        public string Location { get; set; }
+        public Guid Id { get; set; }
+        public MEvent(){}
 
-        public string Country { get; set; }
-
-        [Range(0, Int32.MaxValue, ErrorMessage = "Value should be greater than or equal to 0")]
-        public int Capacity { get; set; }
-
-        public DateTime CreationDate { get; private set; }
-
-        public Guid Id { get; private set; }
-
-        //setters
-        public void SetCreationDate()
+        public MEvent (MEventBase eventBase)
         {
+            Name = eventBase.Name;
+            Location = eventBase.Location;
+            Country = eventBase.Country;
+            Capacity = eventBase.Capacity;
             CreationDate = DateTime.Now;
-        }
-
-        public void SetId()
-        {
             Id = Guid.NewGuid();
         }
+
     }
 }

@@ -62,36 +62,41 @@ namespace MxcEventsBackEnd.Contollers
         // PUT: api/MEvents/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMEvent(Guid id, MEvent mEvent)
+        public async Task<IActionResult> PutMEvent(Guid id, MEventBase mEventBase)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(mEvent));
-            if (id != mEvent.Id)
+            //Console.WriteLine(JsonConvert.SerializeObject(mEvent));
+            /*if (id != mEvent.Id)
             {
-                Console.WriteLine(id);
-                Console.WriteLine(Convert.ToString(mEvent.Id));
+                //Console.WriteLine(id);
+                //Console.WriteLine(Convert.ToString(mEvent.Id));
 
                 return BadRequest();
-            }
+            }*/
 
-            Console.WriteLine(JsonConvert.SerializeObject(_context.Entry(mEvent)));
+            //Console.WriteLine(JsonConvert.SerializeObject(_context.Entry(mEvent)));
 
-            _context.Entry(mEvent).State = EntityState.Modified;
+            //_context.Entry(mEvent).State = EntityState.Modified;
 
-            try
+            MEvent dbEvent = _context.MEvents.Find(id);
+
+
+            if (dbEvent is null)
             {
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MEventExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+
+            Console.WriteLine(JsonConvert.SerializeObject(dbEvent));
+
+            dbEvent.Name = mEventBase.Name;
+            dbEvent.Location = mEventBase.Location;
+            dbEvent.Country = mEventBase.Country;
+            dbEvent.Capacity = mEventBase.Capacity;
+
+            Console.WriteLine(JsonConvert.SerializeObject(dbEvent));
+
+            _context.Entry(dbEvent).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }

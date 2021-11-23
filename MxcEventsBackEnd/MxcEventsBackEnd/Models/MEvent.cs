@@ -11,6 +11,7 @@ namespace MxcEventsBackEnd.Models
         public DateTime CreationDate { get; set; }
 
         public Guid Id { get; set; }
+
         public MEvent(){}
 
         public MEvent (MEventBase eventBase)

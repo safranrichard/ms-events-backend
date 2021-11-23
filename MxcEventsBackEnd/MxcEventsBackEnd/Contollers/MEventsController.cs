@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MxcEventsBackEnd.Models;
+using Newtonsoft.Json;
 
 namespace MxcEventsBackEnd.Contollers
 {
@@ -45,21 +46,17 @@ namespace MxcEventsBackEnd.Contollers
 
             return mEvent;
         }
-
-        // POST: api/MEvent
+        
+        // POST: api/MEvents
         [HttpPost]
-        public async Task<ActionResult<MEvent>> PostMEvent(MEvent mEvent)
+        public async Task<ActionResult<MEvent>> PostMEvent(MEventBase mEventBase)
         {
-            mEvent.SetId();
-            mEvent.SetCreationDate();
-
+            MEvent mEvent = new MEvent(mEventBase);
             _context.MEvents.Add(mEvent);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetMEvents", new { id = mEvent.Id }, mEvent);
         }
-
-        /*
         
 
         // PUT: api/MEvents/5
@@ -67,10 +64,16 @@ namespace MxcEventsBackEnd.Contollers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMEvent(Guid id, MEvent mEvent)
         {
+            Console.WriteLine(JsonConvert.SerializeObject(mEvent));
             if (id != mEvent.Id)
             {
+                Console.WriteLine(id);
+                Console.WriteLine(Convert.ToString(mEvent.Id));
+
                 return BadRequest();
             }
+
+            Console.WriteLine(JsonConvert.SerializeObject(_context.Entry(mEvent)));
 
             _context.Entry(mEvent).State = EntityState.Modified;
 
@@ -93,34 +96,6 @@ namespace MxcEventsBackEnd.Contollers
             return NoContent();
         }
 
-        // POST: api/MEvents
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<MEvent>> PostMEvent(MEvent mEvent)
-        {
-            _context.MEvents.Add(mEvent);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetMEvent", new { id = mEvent.Id }, mEvent);
-        }
-
-        // DELETE: api/MEvents/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMEvent(Guid id)
-        {
-            var mEvent = await _context.MEvents.FindAsync(id);
-            if (mEvent == null)
-            {
-                return NotFound();
-            }
-
-            _context.MEvents.Remove(mEvent);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-        */
-        
         private bool MEventExists(Guid id)
         {
             return _context.MEvents.Any(e => e.Id == id);

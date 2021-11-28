@@ -72,10 +72,12 @@ namespace MxcEventsBackEnd
 
             app.UseEndpoints(endpoints =>
             {
-               endpoints.MapGet("/", context => {
+                // Swashbuckle is start page
+                endpoints.MapGet("/", context => {
                     context.Response.Redirect("/swagger/");
                     return Task.CompletedTask;
                 });
+
                 endpoints.MapControllers();
 
                 endpoints.MapRazorPages();

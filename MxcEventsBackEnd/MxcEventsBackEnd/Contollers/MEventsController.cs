@@ -103,14 +103,14 @@ namespace MxcEventsBackEnd.Contollers
                 return NotFound();
             }
 
-            Console.WriteLine(JsonConvert.SerializeObject(dbEvent));
+            //Console.WriteLine(JsonConvert.SerializeObject(dbEvent));
 
             dbEvent.Name = mEventBase.Name;
             dbEvent.Location = mEventBase.Location;
             dbEvent.Country = mEventBase.Country;
             dbEvent.Capacity = mEventBase.Capacity;
 
-            Console.WriteLine(JsonConvert.SerializeObject(dbEvent));
+            //Console.WriteLine(JsonConvert.SerializeObject(dbEvent));
 
             _context.Entry(dbEvent).State = EntityState.Modified;
 

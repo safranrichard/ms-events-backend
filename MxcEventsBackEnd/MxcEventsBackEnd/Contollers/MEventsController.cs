@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MxcEventsBackEnd.Models;
@@ -25,6 +24,14 @@ namespace MxcEventsBackEnd.Contollers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Object>>> GetMEvents()
         {
+          /*
+            Check Authenticate
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Unauthorized();
+            }
+          */
+
             var response = await _context.MEvents.Select(item => new { item.Name, item.Location, item.Capacity, item.Id, item.CreationDate}) //Hide Country Column
                                                  .OrderBy(item => item.Name)
                                                  .ThenBy(item => item.CreationDate)
@@ -37,6 +44,14 @@ namespace MxcEventsBackEnd.Contollers
         [HttpGet("{id}")]
         public async Task<ActionResult<MEvent>> GetMEvent(Guid id)
         {
+            /*
+              Check Authenticate
+              if (!User.Identity.IsAuthenticated)
+              {
+                  return Unauthorized();
+              }
+            */
+
             var mEvent = await _context.MEvents.FindAsync(id);
 
             if (mEvent == null)
@@ -51,6 +66,14 @@ namespace MxcEventsBackEnd.Contollers
         [HttpPost]
         public async Task<ActionResult<MEvent>> PostMEvent(MEventBase mEventBase)
         {
+            /*
+              Check Authenticate
+              if (!User.Identity.IsAuthenticated)
+              {
+                  return Unauthorized();
+              }
+            */
+
             MEvent mEvent = new MEvent(mEventBase);
             _context.MEvents.Add(mEvent);
             await _context.SaveChangesAsync();
@@ -64,18 +87,13 @@ namespace MxcEventsBackEnd.Contollers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMEvent(Guid id, MEventBase mEventBase)
         {
-            //Console.WriteLine(JsonConvert.SerializeObject(mEvent));
-            /*if (id != mEvent.Id)
-            {
-                //Console.WriteLine(id);
-                //Console.WriteLine(Convert.ToString(mEvent.Id));
-
-                return BadRequest();
-            }*/
-
-            //Console.WriteLine(JsonConvert.SerializeObject(_context.Entry(mEvent)));
-
-            //_context.Entry(mEvent).State = EntityState.Modified;
+            /*
+              Check Authenticate
+              if (!User.Identity.IsAuthenticated)
+              {
+                  return Unauthorized();
+              }
+            */
 
             MEvent dbEvent = _context.MEvents.Find(id);
 
